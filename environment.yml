@@ -1,0 +1,11 @@
+name: cryo_ET_data_prep
+channels:
+  - conda-forge
+dependencies:
+  - mrcfile
+  - pycodestyle
+  - numpy
+  - python=3.13
+  - tifffile
+
+prefix: "C:\\Users\\jared\\y\\envs\\cryo_ET_data_prep"
