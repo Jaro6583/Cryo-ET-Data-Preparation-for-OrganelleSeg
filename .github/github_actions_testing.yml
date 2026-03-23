@@ -1,0 +1,21 @@
+name: Tests
+
+on:
+  push:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  run_linter:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: conda-incubator/setup-miniconda@v3
+        with:
+          environment-file: environment.yml
+          activate-environment: cryo_ET_data_prep
+          auto-activate-base: false
+          miniforge-version: "24.3.0-0"
+          use-mamba: true
+      - run: pycodestyle $(git ls-files "*.py")
+        shell: bash -l {0}
