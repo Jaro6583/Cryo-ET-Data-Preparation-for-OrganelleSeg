@@ -1,0 +1,10 @@
+# Ignore all large EM data formats
+*.mrc
+*.rec
+*.map
+*.gz
+*.tiff
+
+# Ignore python cache
+__pycache__/
+.ipynb_checkpoints/
