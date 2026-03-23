@@ -3,6 +3,7 @@ channels:
   - conda-forge
 dependencies:
   - mrcfile
+  - pycodestyle
   - numpy
   - python=3.13
   - tifffile
