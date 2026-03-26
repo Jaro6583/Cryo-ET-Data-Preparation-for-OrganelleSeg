@@ -8,5 +8,6 @@ dependencies:
   - python=3.13
   - tifffile
   - tqdm
+  - pycodestyle
 
 prefix: "C:\\Users\\jared\\y\\envs\\cryo_ET_data_prep"
