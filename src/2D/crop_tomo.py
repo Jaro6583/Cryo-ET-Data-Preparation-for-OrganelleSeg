@@ -70,7 +70,7 @@ def process_tomogram(image_path,
                         # If the flag is set and the label array is entirely 0
                         if filter_empty and not np.any(lbl_crop):
                             continue
-                        
+
                         # Naming convention: prefix_z000_r0_c0.tif
                         tile_id = f"{base_name}_z{z:03d}_r{row}_c{col}.tif"
 
@@ -102,7 +102,8 @@ if __name__ == "__main__":
     parser.add_argument("--step", type=int, default=5,
                         help="Analyze every Nth slice")
     parser.add_argument("--filter_empty", default=True,
-                        help="Skip saving tiles that contain only background (all 0s).")
+                        help="Skip saving tiles that contain"+
+                        "only background (all 0s).")
 
     args = parser.parse_args()
     process_tomogram(args.image,
