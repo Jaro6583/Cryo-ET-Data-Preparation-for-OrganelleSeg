@@ -27,7 +27,8 @@ def process_tomogram(image_path,
                      output_dir,
                      tile_size,
                      grid_size,
-                     slice_step):
+                     slice_step,
+                     filter_empty):
     # Ensure output directories exist
     img_out = os.path.join(output_dir, "images")
     lbl_out = os.path.join(output_dir, "labels")
@@ -66,6 +67,10 @@ def process_tomogram(image_path,
                                                   x:x+tile_size]
                         lbl_crop = slice_lbl[y:y+tile_size, x:x+tile_size]
 
+                        # If the flag is set and the label array is entirely 0
+                        if filter_empty and not np.any(lbl_crop):
+                            continue
+
                         # Naming convention: prefix_z000_r0_c0.tif
                         tile_id = f"{base_name}_z{z:03d}_r{row}_c{col}.tif"
 
@@ -96,6 +101,8 @@ if __name__ == "__main__":
     )
     parser.add_argument("--step", type=int, default=5,
                         help="Analyze every Nth slice")
+    helpmsg = "Skip saving tiles that contain only background (all 0s)."
+    parser.add_argument("--filter_empty", default=True, help=helpmsg)
 
     args = parser.parse_args()
     process_tomogram(args.image,
@@ -103,4 +110,5 @@ if __name__ == "__main__":
                      args.output,
                      args.crop_size,
                      args.grid_size,
-                     args.step)
+                     args.step,
+                     args.filter_empty)
