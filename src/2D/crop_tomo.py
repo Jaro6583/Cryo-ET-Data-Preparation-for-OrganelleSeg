@@ -101,9 +101,8 @@ if __name__ == "__main__":
     )
     parser.add_argument("--step", type=int, default=5,
                         help="Analyze every Nth slice")
-    parser.add_argument("--filter_empty", default=True,
-                        help="Skip saving tiles that contain"+
-                        "only background (all 0s).")
+    helpmsg = "Skip saving tiles that contain only background (all 0s)."
+    parser.add_argument("--filter_empty", default=True, help=helpmsg)
 
     args = parser.parse_args()
     process_tomogram(args.image,
