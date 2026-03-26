@@ -40,7 +40,7 @@ def process_3d_pair(img_path, lbl_path, target_spacing, output_dir):
             img_data = m_img.data.astype(np.float32)
             lbl_data = m_lbl.data.astype(np.uint8)
             current_spacing = m_img.voxel_size.x
-    
+
     print(f"--- Processing {base_name} ---")
     print(f"Current spacing: {current_spacing:.2f} A/px |" +
           f"Target: {target_spacing:.2f} A/px")
@@ -54,7 +54,7 @@ def process_3d_pair(img_path, lbl_path, target_spacing, output_dir):
         img_data = zoom(img_data, scale_factor, order=3)
         # Order 0 = Nearest neighbor for labels (preserves integer classes)
         lbl_data = zoom(lbl_data, scale_factor, order=0)
-    
+
     # 3. Pad to divisible by 32
     print(f"Shape after scaling: {img_data.shape}")
     img_data = pad_to_divisible(img_data)
