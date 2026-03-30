@@ -1,0 +1,23 @@
+{
+    "_comment": "CryoET class mapping. Maps class to label ID.",
+    "_version": "1.0",
+    "_n_classes": 15,
+
+    "classes": {
+        "background":             0,
+        "plasma_membrane":        1,
+        "nucleus":                2,
+        "cytoplasm":              3,
+        "mitochondria":           4,
+        "endoplasmic_reticulum":  5,
+        "golgi_apparatus":        6,
+        "nucleoplasm":            7,
+        "nucleosomes":            8,
+        "nuclear_envelope":       9,
+        "nuclear_pore_complexes": 10,
+        "ribosomes":              11,
+        "vesicles":               12,
+        "microtubules":           13,
+        "lipid_drops":            14
+    }
+}
