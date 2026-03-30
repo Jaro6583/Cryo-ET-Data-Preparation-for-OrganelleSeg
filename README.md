@@ -10,4 +10,7 @@ In particular, the containment map file shows which classes are included in whic
 This CLI file takes several 3D .mrc or .rec annotation files that were labeled using the author's labeling system. The user needs to figure out what the author's labeling system was. This script will ask the user to relabel the classes. It will then collate all the masks into a single 3D .mrc file (with labeling that matches the user's system). This 3D .mrc file is ready for 2D cropping.
 
 ## crop_tomo.py
-This CLI file takes two files: the 3D reconstructed tomogram (.mrc or .rec) and the 3D annotation file (.mrc or .rec). As per user specifications, the script will slice the 3D structures along the z axis (skipping every set number of slices). The 2D slice will then be divided into a number of crops. The number of crops from each z-slice will depend on the desired pixel dimensions of the user. Crops with no annotations will be discarded. 
+This CLI file takes two files: the 3D reconstructed tomogram (.mrc or .rec) and the 3D annotation file (.mrc or .rec). As per user specifications, the script will slice the 3D structures along the z axis (skipping every set number of slices). The 2D slice will then be divided into a number of crops. The number of crops from each z-slice will depend on the desired pixel dimensions of the user. Crops with no annotations will be discarded. 2D crops from the original tomogram and from the annotations will be output in the specified directory as .tif files.
+
+## annotations_check.py
+This CLI file takes a 2D annotations .tif file and prints the unique values contained in it. This would simply be useful to make sure that the labels the user is expecting are actually found in the annotation crop.
