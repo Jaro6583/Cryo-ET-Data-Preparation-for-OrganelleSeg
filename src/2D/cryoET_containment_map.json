@@ -1,0 +1,38 @@
+{
+    "_comment": "Containment map for CryoET classes.",
+    "_version": "1.0",
+
+    "containment_map": {
+        "1":  [],
+        "2":  [7, 9],
+        "3":  [11, 12, 13, 14],
+        "4":  [],
+        "5":  [],
+        "6":  [],
+        "7":  [8],
+        "8":  [],
+        "9":  [10],
+        "10": [],
+        "11": [],
+        "12": [],
+        "13": [],
+        "14": []
+    },
+
+    "containment_map_named": {
+        "plasma_membrane (1)":  [],
+        "nucleus (2)":  ["nucleoplasm (7)", "nuclear_envelope (9)"],
+        "cytoplasm (3)":  ["ribosomes (11)", "vesicles (12)", "microtubules (13)", "lipid_drops (14)"],
+        "mitochrondria (4)":  [],
+        "endoplasmic_reticulum (5)":  [],
+        "golgi_apparatus (6)":  [],
+        "nucleoplasm (7)":  ["nucleosomes (8)"],
+        "nucleosomes (8)":  [],
+        "nuclear_envelope (9)":  ["nuclear_pore_complexes (10)"],
+        "nuclear_pore_complexes (10)": [],
+        "ribosomes (11)": [],
+        "vesicles (12)": [],
+        "microtubules (13)": [],
+        "lipid_drops (14)": []
+    }
+}
