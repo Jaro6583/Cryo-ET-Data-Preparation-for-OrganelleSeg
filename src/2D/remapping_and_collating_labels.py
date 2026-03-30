@@ -37,7 +37,7 @@ def collate_annotations(input_files, json_path, output_filepath):
         print(f"\n--- Scanning: {filename} ---")
 
         try:
-            with mrcfile.open(file_path, permissive=True, mmap=True) as mrc:
+            with mrcfile.open(file_path, permissive=True) as mrc:
                 data = mrc.data
 
                 # Initialize the empty master array on the first valid file
@@ -53,6 +53,7 @@ def collate_annotations(input_files, json_path, output_filepath):
                     continue
 
                 # Find unique integers in this specific file
+                print("Searching for unique values (can take a minute)...")
                 unique_vals = np.unique(data)
 
                 # Filter out 0 (assuming it's always background)
