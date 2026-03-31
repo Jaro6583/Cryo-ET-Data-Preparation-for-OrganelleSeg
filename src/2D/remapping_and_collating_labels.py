@@ -53,6 +53,7 @@ def collate_annotations(input_files, json_path, output_filepath):
                     continue
 
                 # Find unique integers in this specific file
+                print("Searching for unique values (can take a minute)...")
                 unique_vals = np.unique(data)
 
                 # Filter out 0 (assuming it's always background)
