@@ -9,5 +9,6 @@ dependencies:
   - tifffile
   - tqdm
   - pycodestyle
+  - matplotlib
 
 prefix: "C:\\Users\\jared\\y\\envs\\cryo_ET_data_prep"
