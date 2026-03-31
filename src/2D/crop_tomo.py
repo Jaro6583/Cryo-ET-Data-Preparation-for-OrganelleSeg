@@ -1,6 +1,7 @@
 import argparse
 import os
 import numpy as np
+import matplotlib.pyplot as plt
 import mrcfile
 import tifffile
 from tqdm import tqdm
@@ -22,6 +23,14 @@ def get_tile_indicies(image_size, tile_size, num_tiles):
     return [i * stride for i in range(num_tiles)]
 
 
+def colorize_labels(label_array, num_classes=15):
+    # Maps 0-14 integers to distinct RGB colors for human visualization.
+    cmap = plt.get_cmap('tab20', num_classes)
+    # Map the integers to colors
+    colored = cmap(label_array)
+    return (colored[:, :, :3] * 255).astype(np.uint8)
+
+
 def process_tomogram(image_path,
                      label_path,
                      output_dir,
@@ -32,8 +41,10 @@ def process_tomogram(image_path,
     # Ensure output directories exist
     img_out = os.path.join(output_dir, "images")
     lbl_out = os.path.join(output_dir, "labels")
+    pre_out = os.path.join(output_dir, "previews")
     os.makedirs(img_out, exist_ok=True)
     os.makedirs(lbl_out, exist_ok=True)
+    os.makedirs(pre_out, exist_ok=True)
 
     base_name = os.path.basename(image_path).split('.')[0]
 
@@ -79,6 +90,9 @@ def process_tomogram(image_path,
                                          img_crop)
                         tifffile.imwrite(os.path.join(lbl_out, tile_id),
                                          lbl_crop.astype(np.uint8))
+                        lbl_preview = colorize_labels(lbl_crop)
+                        tifffile.imwrite(os.path.join(pre_out, tile_id),
+                                         lbl_preview)
 
 
 if __name__ == "__main__":
@@ -102,7 +116,7 @@ if __name__ == "__main__":
     parser.add_argument("--step", type=int, default=5,
                         help="Analyze every Nth slice")
     helpmsg = "Skip saving tiles that contain only background (all 0s)."
-    parser.add_argument("--filter_empty", default=True, help=helpmsg)
+    parser.add_argument("--filter_empty", default=False, help=helpmsg)
 
     args = parser.parse_args()
     process_tomogram(args.image,
