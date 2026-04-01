@@ -1,7 +1,7 @@
 {
     "_comment": "CryoET class mapping. Maps class to label ID.",
     "_version": "1.0",
-    "_n_classes": 15,
+    "_n_classes": 18,
 
     "classes": {
         "background":             0,
@@ -18,6 +18,9 @@
         "ribosomes":              11,
         "vesicles":               12,
         "microtubules":           13,
-        "lipid_drops":            14
+        "lipid_drops":            14,
+        "microtubules":           15,
+        "actin":                  16,
+        "fatty_acid_synthase":    17
     }
 }

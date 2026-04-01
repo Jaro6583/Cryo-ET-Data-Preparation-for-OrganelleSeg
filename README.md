@@ -1,6 +1,9 @@
 # Cryo-ET-Data-Preparation-for-OrganelleSeg
 Contains a variety of tools for data prep and pre-processing before passing into training or prediction of OrganelleSeg
 
+## TODO
+- Develop resolution/bin script to alter tomograms (if/how much noise to add?)
+
 # File Descriptions
 ## cryoET_class_mapping.json and cryoET_containment_map.json
 These files detail the class integer labels. For example, plasma membrane -> (1), nucleus -> (2), mitochondria -> (4), etc.

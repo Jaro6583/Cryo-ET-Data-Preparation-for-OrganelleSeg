@@ -5,7 +5,7 @@
     "containment_map": {
         "1":  [],
         "2":  [7, 9],
-        "3":  [11, 12, 13, 14],
+        "3":  [11, 12, 13, 14, 15, 16, 17],
         "4":  [],
         "5":  [],
         "6":  [],
@@ -16,13 +16,16 @@
         "11": [],
         "12": [],
         "13": [],
-        "14": []
+        "14": [],
+        "15": [],
+        "16": [],
+        "17": []
     },
 
     "containment_map_named": {
         "plasma_membrane (1)":  [],
         "nucleus (2)":  ["nucleoplasm (7)", "nuclear_envelope (9)"],
-        "cytoplasm (3)":  ["ribosomes (11)", "vesicles (12)", "microtubules (13)", "lipid_drops (14)"],
+        "cytoplasm (3)":  ["ribosomes (11)", "vesicles (12)", "microtubules (13)", "lipid_drops (14)", "microtubules (15)", "actin (16)", "fatty_acid_synthase (17)"],
         "mitochrondria (4)":  [],
         "endoplasmic_reticulum (5)":  [],
         "golgi_apparatus (6)":  [],
@@ -33,6 +36,9 @@
         "ribosomes (11)": [],
         "vesicles (12)": [],
         "microtubules (13)": [],
-        "lipid_drops (14)": []
+        "lipid_drops (14)": [],
+        "microtubules (15)": [],
+        "actin (16)": [],
+        "fatty_acid_synthase (17)": []
     }
 }
