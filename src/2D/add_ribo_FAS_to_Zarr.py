@@ -76,9 +76,10 @@ def parse_args():
 
     return parser.parse_args()
 
+
 def extract_pixel_spacing(em_zarr_path):
     # Attempt to extract pixel spacing from the parent OME-Zarr group.
-    # (The scale is usually stored in the parent group: .zatters of the 'fibsem-uint8' folder)
+    # (The scale is usually stored in the parent group: .zatters of the 'fibsem-uint8' folder)  # noqa
     parent_group_path = os.path.dirname(em_zarr_path.rstrip('/'))
     try:
         grp = zarr.open(parent_group_path, mode="r")
@@ -92,6 +93,7 @@ def extract_pixel_spacing(em_zarr_path):
     except Exception:
         pass
     return None
+
 
 def draw_sphere(volume, center_z, center_y, center_x, radius):
     # Draws a solid 3D sphere of 1s into the binary volume.
@@ -107,6 +109,7 @@ def draw_sphere(volume, center_z, center_y, center_x, radius):
 
     mask = dist_sq <= radius**2
     volume[z_min:z_max, y_min:y_max, x_min:x_max][mask] = 1
+
 
 def generate_class_mask(shape, csv_path, radius_pixels, out_dir, class_name):
     # Generates a binary mask array and saves it as s0 in the class directory
@@ -129,16 +132,17 @@ def generate_class_mask(shape, csv_path, radius_pixels, out_dir, class_name):
     skipped = original_len - len(df)
     if skipped > 0:
         print(f"  -> Skipped {skipped} invalid rows.")
-    
+
     print(f"  -> Drawing {len(df)} spheres of radius {radius_pixels:.2f}",
           "px...")
     for _, row in df.iterrows():
         draw_sphere(volume, row['z'], row['y'], row['x'], radius_pixels)
-    
+
     # CellMap format: groundtruth/{crop}/{class_name}/s0
     out_path = os.path.join(out_dir, class_name, "s0")
     print(f"  -> Saving to {out_path}...")
     zarr.save(out_path, volume, chunks=(64, 64, 64))
+
 
 def main():
     args = parse_args()
@@ -160,7 +164,7 @@ def main():
         print(f"Auto-detected pixel spacing: {pixel_spacing} Angstroms/pixel")
     else:
         print(f"Using manual pixel spacing: {pixel_spacing} Angstroms/pixel")
-    
+
     # 3. Calculate Radii
     ribo_radius_px = (args.ribo_diameter_A / 2.0) / pixel_spacing
     fas_radius_px = (args.fas_diameter_A / 2.0) / pixel_spacing
@@ -175,6 +179,7 @@ def main():
                         args.gt_dir, args.fas_class_name)
 
     print("\nAll done! The new classes are ready for the zarr_loader.")
+
 
 if __name__ == "__main__":
     main()

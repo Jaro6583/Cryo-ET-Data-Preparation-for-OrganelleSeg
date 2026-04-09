@@ -1466,7 +1466,8 @@ def get_zarr_dataloader(
                     meta.z_range = (int(z_start), int(z_end))
                     # Clamp to actual volume depth
                     D = meta.output_shape[0]
-                    meta.z_range = (max(0, meta.z_range[0]), min(D - 1, meta.z_range[1]))
+                    meta.z_range = (max(0, meta.z_range[0]),
+                                    min(D - 1, meta.z_range[1]))
                 metas.append(meta)
             else:
                 print(f"  [WARN] Could not resolve crop {ds}/{crop}, skipping")
@@ -1479,27 +1480,30 @@ def get_zarr_dataloader(
     t0 = time.monotonic()
     train_metas = _resolve_entries(train_entries)
     dt = time.monotonic() - t0
-    print(f"  [Zarr] Resolved {len(train_metas)}/{len(train_entries)} training crops ({dt:.1f}s)")
+    print(f"  [Zarr] Resolved {len(train_metas)}/{len(train_entries)}",
+          f"training crops ({dt:.1f}s)")
 
     if val_entries:
         if max_volumes is not None:
             val_entries = val_entries[:max_volumes]
-            print(f"  [max_volumes={max_volumes}] Using {len(val_entries)} validation crops")
+            print(f"  [max_volumes={max_volumes}]",
+                  f"Using {len(val_entries)} validation crops")
         print(f"  [Zarr] Resolving {len(val_entries)} validation crops...")
         val_metas = _resolve_entries(val_entries)
-        print(f"  [Zarr] Resolved {len(val_metas)}/{len(val_entries)} validation crops")
+        print(f"  [Zarr] Resolved {len(val_metas)}/{len(val_entries)}",
+              "validation crops")
     else:
         val_metas = []
 
     # ── Determine 2D vs 3D ─────────────────────────────────────────
     # 2.5D mode (context_slices > 1) still uses 2D slice datasets;
     # input_shape[0] equals context_slices, NOT a spatial depth dim.
-    is_2d = len(input_shape) == 3 and (input_shape[0] == 1 or context_slices > 1)
+    is_2d = len(input_shape) == 3 and (input_shape[0] == 1 or context_slices > 1)  # noqa
     spatial_shape = input_shape[-2:]  # (H, W) for 2D
 
     # ── Worker init for RNG diversity ──────────────────────────────
     def _worker_init_fn(worker_id: int) -> None:
-        """Re-seed each DataLoader worker so they produce independent samples."""
+        #Re-seed each DataLoader worker so they produce independent samples.
         worker_seed = torch.initial_seed() + worker_id
         random.seed(worker_seed)
         np.random.seed(worker_seed % (2**32))
@@ -1518,9 +1522,11 @@ def get_zarr_dataloader(
             dl_kwargs["prefetch_factor"] = prefetch_factor
 
     # ── Build datasets ─────────────────────────────────────────────
-    # iterations_per_epoch = number of *batches*, so total samples = iterations * batch_size
+    # iterations_per_epoch = number of *batches*
+    # so total samples = iterations * batch_size
     train_samples = iterations_per_epoch * batch_size
-    val_samples = kwargs.get("val_iterations", 500)  # random val samples per epoch
+    # random val samples per epoch
+    val_samples = kwargs.get("val_iterations", 500)
 
     if is_2d:
         train_ds = ZarrSliceDataset(
@@ -1553,18 +1559,22 @@ def get_zarr_dataloader(
                 z_augmentation=False,
                 composite_rules=composite_rules,
             )
-            val_loader = DataLoader(val_ds, batch_size=1, num_workers=0, pin_memory=pin_memory)
+            val_loader = DataLoader(val_ds,
+                                    batch_size=1,
+                                    num_workers=0,
+                                    pin_memory=pin_memory)
 
             # Deterministic visualization loader — fixed crops for
             # epoch-over-epoch visual comparison (same slices every time).
             # If vis_crops is specified, only use those datasets for vis.
             vis_crops_filter = kwargs.get("vis_crops", None)
             if vis_crops_filter:
-                vis_metas = [m for m in val_metas if m.dataset in vis_crops_filter]
+                vis_metas = [m for m in val_metas if m.dataset in vis_crops_filter]  # noqa
                 if not vis_metas:
                     vis_metas = val_metas  # fallback if none match
                 else:
-                    print(f"  [Vis] Filtered to {len(vis_metas)} crops: {[m.dataset for m in vis_metas]}")
+                    print(f"  [Vis] Filtered to {len(vis_metas)}",
+                          f"crops: {[m.dataset for m in vis_metas]}")
             else:
                 vis_metas = val_metas
             vis_ds = ZarrDeterministicValDataset(
@@ -1576,7 +1586,10 @@ def get_zarr_dataloader(
                 spatial_tiles=val_spatial_tiles,
                 context_slices=context_slices,
             )
-            vis_loader = DataLoader(vis_ds, batch_size=1, num_workers=0, pin_memory=pin_memory)
+            vis_loader = DataLoader(vis_ds,
+                                    batch_size=1,
+                                    num_workers=0,
+                                    pin_memory=pin_memory)
     else:
         patch_size = input_shape  # (D, H, W)
         train_ds = ZarrVolumeDataset(
@@ -1598,7 +1611,10 @@ def get_zarr_dataloader(
                 iterations=max(len(val_metas) * 5, 100),
                 augment=False,
             )
-            val_loader = DataLoader(val_ds, batch_size=1, num_workers=0, pin_memory=pin_memory)
+            val_loader = DataLoader(val_ds,
+                                    batch_size=1,
+                                    num_workers=0,
+                                    pin_memory=pin_memory)
             vis_loader = None  # 3D doesn't need separate vis loader
 
     return train_loader, val_loader, vis_loader
