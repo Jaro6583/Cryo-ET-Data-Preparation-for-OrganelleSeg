@@ -5,10 +5,11 @@ channels:
 dependencies:
   - mrcfile
   - numpy
+  - pandas
+  - pycodestyle
   - python=3.13
   - tifffile
   - tqdm
-  - pycodestyle
-  - matplotlib
+  - zarr
 
 prefix: "C:\\Users\\jared\\y\\envs\\cryo_ET_data_prep"
