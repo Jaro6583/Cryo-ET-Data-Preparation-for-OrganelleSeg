@@ -22,7 +22,10 @@ This CLI file takes a 2D annotations .tif file and prints the unique values cont
 Since every dataset has a unique folder hierarchy and structure, not all the tools in this repo will be used and some may be used in different orders. Here, I explain the structure of each dataset and how to use the tools in preparation for OrganelleSeg.
 
 ## EMPIAR 10988
-This dataset contains VPP/ and DEF/ directories. Each of these contains the following directories: frames/, labels/, metadata/, particle_lists/, tomograms/. The tomograms/ directory contains 3D .rec tomograms. The labels/ directory contains corresponding 3D .mrc files that label the various classes found within the specified tomogram. The base names of the label files are the same as the base name for the tomogram they label (for example, TS_0001_membranes.mrc and TS_0001_organelles.mrc are two of the files that label the TS_0001.rec tomogram). The cyto_ribosomes.mrc, cytosol.mrc, FAS.mrc, and membranes.mrc files are all binary files (0 for background and 1 for the label) for cytosolic ribosomes, cytosol, fatty acid synthase, and membranes (respectively). The organelles.mrc file contains voxels that range in value from 0 to 13. Each of these values maps to a specific label:\
+This dataset contains VPP/ and DEF/ directories. Each of these contains the following directories: frames/, labels/, metadata/, particle_lists/, tomograms/.
+The tomograms/ directory contains 3D .rec tomograms.
+The labels/ directory contains corresponding 3D .mrc files that label the various classes found within the specified tomogram.
+The base names of the label files are the same as the base name for the tomogram they label (for example, TS_0001_membranes.mrc and TS_0001_organelles.mrc are two of the files that label the TS_0001.rec tomogram). The cyto_ribosomes.mrc, cytosol.mrc, FAS.mrc, and membranes.mrc files are all binary files (0 for background and 1 for the label) for cytosolic ribosomes, cytosol, fatty acid synthase, and membranes (respectively). The organelles.mrc file contains voxels that range in value from 0 to 13. Each of these values maps to a specific label:\
 0       exterior\
 1       cytoplas\
 2       mitochondria\
@@ -36,4 +39,6 @@ This dataset contains VPP/ and DEF/ directories. Each of these contains the foll
 10      golgi\
 11      vesicular body\
 13      not identified compartment.\
+Additionally, the particle_lists/ directory contains cyto_ribosomes and FAS coordinate CSV files.
+
 To prepare this dataset, I used the remapping_and_collating_labels.py file and input all 5 label .mrc files. It output a 3D master_compiled_labels.mrc file with labels in accordance with our own labeling scheme (see JSON files). I then used this master label file along with the initial tomogram in the crop_tomo.py script. That script sliced the 3D files into 2D z-slices and cropped them. It named the crops in a corresponding manner and placed them in images/, labels/, and previews/ directories. 
